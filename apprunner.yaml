@@ -22,21 +22,19 @@ build:
   commands:
     pre-build:
       - echo "=== Starting build process ==="
-      - echo "Python version: $(python3 --version)"
-      - echo "Pip version: $(pip3 --version)"
+      - python3 --version
+      - pip3 --version
     build:
       - python3 -m venv /app/venv
-      - . /app/venv/bin/activate
+      - source /app/venv/bin/activate
       - pip3 install --upgrade pip
+      - pip3 install fastapi uvicorn
       - pip3 install -r requirements.txt
-      - echo "=== Installed packages ==="
       - pip3 list
 
 run:
   command: |
-    echo "=== Activating virtual environment ==="
-    . /app/venv/bin/activate
-    echo "=== Starting application ==="
+    source /app/venv/bin/activate.psl
     uvicorn main:app --host 0.0.0.0 --port 8080
   network:
     port: 8080
