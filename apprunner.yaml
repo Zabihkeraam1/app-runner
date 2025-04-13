@@ -21,14 +21,22 @@ runtime: python311
 build:
   commands:
     pre-build:
-      - echo "Starting build..."
+      - echo "=== Starting build process ==="
+      - echo "Python version: $(python3 --version)"
+      - echo "Pip version: $(pip3 --version)"
     build:
       - python3 -m venv /app/venv
       - . /app/venv/bin/activate
+      - pip3 install --upgrade pip
       - pip3 install -r requirements.txt
-      - ln -s /app/venv/bin/python3 /usr/local/bin/python  # Create symlink
+      - echo "=== Installed packages ==="
+      - pip3 list
 
 run:
-  command: /app/venv/bin/python3 -m uvicorn main:app --host 0.0.0.0 --port 8080
+  command: |
+    echo "=== Activating virtual environment ==="
+    . /app/venv/bin/activate
+    echo "=== Starting application ==="
+    uvicorn main:app --host 0.0.0.0 --port 8080
   network:
     port: 8080
