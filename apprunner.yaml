@@ -3,12 +3,14 @@ runtime: python311
 
 build:
   commands:
-    - echo "Starting build..."
-    - python3 -m venv /app/venv
-    - . /app/venv/bin/activate
-    - pip3 install -r requirements.txt
+    pre-build:
+      - echo "Starting build..."
+    build:
+      - python3 -m venv /app/venv
+      - . /app/venv/bin/activate
+      - pip3 install -r requirements.txt
 
 run:
-  command: python3 -m uvicorn main:app --host 0.0.0.0 --port 8080
+  command: python -m uvicorn main:app --host 0.0.0.0 --port 8080
   network:
     port: 8080
