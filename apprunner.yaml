@@ -33,8 +33,12 @@ build:
       - pip3 list
 
 run:
-  command: |
-    source /app/venv/bin/activate.psl
-    uvicorn main:app --host 0.0.0.0 --port 8080
+  runtime-version: 3.11
+  pre-run:  
+    - pip3 install --upgrade pip
+    - source /app/venv/bin/activate
+    - pip3 install fastapi uvicorn
+    - pip3 install -r requirements.txt
+  command: uvicorn main:app --host 0.0.0.0 --port 8080
   network:
     port: 8080
