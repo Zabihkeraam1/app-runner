@@ -13,19 +13,19 @@ build:
     build:
       - python3 -m venv /app/venv
       - . /app/venv/bin/activate
-      - pip install --upgrade pip
+      - pip3 install --upgrade pip
       - echo "=== DEBUG: Installing requirements ==="
-      - pip install -r requirements.txt || echo "Failed to install requirements"
+      - pip3 install -r requirements.txt || echo "Failed to install requirements"
       - echo "=== DEBUG: Installed packages ==="
-      - pip list
+      - pip3 list
 
 run:
   command: |
     echo "=== STARTING APPLICATION ==="
     . /app/venv/bin/activate
     echo "=== FINAL PACKAGE LIST ==="
-    pip list
+    pip3 list
     echo "=== STARTING SERVER ==="
-    python -m uvicorn main:app --host 0.0.0.0 --port 8080
+    python3 -m uvicorn main:app --host 0.0.0.0 --port 8080
   network:
     port: 8080
