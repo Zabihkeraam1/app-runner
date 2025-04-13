@@ -3,29 +3,12 @@ runtime: python311
 
 build:
   commands:
-    pre-build:
-      - echo "=== DEBUG: Current directory ==="
-      - pwd
-      - ls -la
-      - echo "=== DEBUG: Checking Python version ==="
-      - python3 --version
-      - pip3 --version
-    build:
-      - python3 -m venv /app/venv
-      - . /app/venv/bin/activate
-      - pip3 install --upgrade pip
-      - echo "=== DEBUG: Installing requirements ==="
-      - pip3 install -r requirements.txt || echo "Failed to install requirements"
-      - echo "=== DEBUG: Installed packages ==="
-      - pip3 list
+    - echo "Starting build..."
+    - python3 -m venv /app/venv
+    - . /app/venv/bin/activate
+    - pip3 install -r requirements.txt
 
 run:
-  command: |
-    echo "=== STARTING APPLICATION ==="
-    . /app/venv/bin/activate
-    echo "=== FINAL PACKAGE LIST ==="
-    pip3 list
-    echo "=== STARTING SERVER ==="
-    python3 -m uvicorn main:app --host 0.0.0.0 --port 8080
+  command: python3 -m uvicorn main:app --host 0.0.0.0 --port 8080
   network:
     port: 8080
